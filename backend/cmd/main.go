@@ -11,11 +11,14 @@ func main() {
 
 	cfg := config.LoadConfig()
 
-	_, err := database.Connect(cfg)
-
+	db, err := database.Connect(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("Server Started")
+	if err := database.Migrate(db); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("SpotSync API Started")
 }

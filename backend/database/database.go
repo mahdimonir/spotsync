@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"spotsync/config"
+	"spotsync/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -47,4 +48,21 @@ func Connect(cfg *config.Config) (*gorm.DB, error) {
 	log.Println("Connected to PostgreSQL")
 
 	return db, nil
+}
+
+func Migrate(db *gorm.DB) error {
+
+	err := db.AutoMigrate(
+		&models.User{},
+		&models.ParkingZone{},
+		&models.Reservation{},
+	)
+
+	if err != nil {
+		return err
+	}
+
+	log.Println("Database migrated successfully")
+
+	return nil
 }
