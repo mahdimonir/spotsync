@@ -1,0 +1,16 @@
+.env
+
+tmp/
+air.log
+
+vendor/
+
+coverage.out
+
+*.exe
+*.test
+
+.idea/
+.vscode/
+
+.DS_Store
