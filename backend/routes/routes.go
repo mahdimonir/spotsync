@@ -1,12 +1,23 @@
 package routes
 
-import "github.com/labstack/echo/v4"
+import (
+	"spotsync/handler"
 
-func RegisterRoutes(e *echo.Echo) {
+	"github.com/labstack/echo/v4"
+)
 
-	e.GET("/", func(c echo.Context) error {
+func RegisterRoutes(
+	e *echo.Echo,
+	authHandler *handler.AuthHandler,
+) {
+
+	api := e.Group("/api/v1")
+
+	RegisterAuthRoutes(api, authHandler)
+
+	api.GET("/health", func(c echo.Context) error {
 		return c.JSON(200, map[string]string{
-			"message": "SpotSync API Running",
+			"status": "ok",
 		})
 	})
 

@@ -50,3 +50,14 @@ func (r *AuthRepository) GetUserByID(id uint) (*models.User, error) {
 
 	return &user, nil
 }
+
+func (r *AuthRepository) ExistsByEmail(email string) (bool, error) {
+	var count int64
+
+	err := r.db.
+		Model(&models.User{}).
+		Where("email = ?", email).
+		Count(&count).Error
+
+	return count > 0, err
+}

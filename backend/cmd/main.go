@@ -5,11 +5,18 @@ import (
 
 	"spotsync/config"
 	"spotsync/database"
+	"spotsync/handler"
+	"spotsync/repository"
 	"spotsync/routes"
+	"spotsync/service"
 	customValidator "spotsync/validator"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	echoMiddleware "github.com/labstack/echo/v4/middleware"
+
+	_ "spotsync/docs"
+
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 func main() {
@@ -29,11 +36,20 @@ func main() {
 
 	e.Validator = customValidator.New()
 
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-	e.Use(middleware.CORS())
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
-	routes.RegisterRoutes(e)
+	e.Use(echoMiddleware.Logger())
+	e.Use(echoMiddleware.Recover())
+	e.Use(echoMiddleware.CORS())
+
+	// Dependency Injection
+	authRepo := repository.NewAuthRepository(db)
+	authService := service.NewAuthService(authRepo, cfg)
+	authHandler := handler.NewAuthHandler(authService)
+
+	routes.RegisterRoutes(e, authHandler)
+
+	log.Println("SpotSync API running on :" + cfg.Port)
 
 	log.Fatal(e.Start(":" + cfg.Port))
 }

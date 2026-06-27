@@ -6,10 +6,15 @@ type APIResponse struct {
 	Success bool        `json:"success"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data,omitempty"`
-	Errors  interface{} `json:"errors,omitempty"`
+	Error   interface{} `json:"error,omitempty"`
 }
 
-func Success(c echo.Context, status int, message string, data interface{}) error {
+func Success(
+	c echo.Context,
+	status int,
+	message string,
+	data interface{},
+) error {
 	return c.JSON(status, APIResponse{
 		Success: true,
 		Message: message,
@@ -17,10 +22,15 @@ func Success(c echo.Context, status int, message string, data interface{}) error
 	})
 }
 
-func Error(c echo.Context, status int, message string, err interface{}) error {
+func Error(
+	c echo.Context,
+	status int,
+	message string,
+	err interface{},
+) error {
 	return c.JSON(status, APIResponse{
 		Success: false,
 		Message: message,
-		Errors:  err,
+		Error:   err,
 	})
 }
