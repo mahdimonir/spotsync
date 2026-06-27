@@ -1,4 +1,6 @@
 .env
+spotsync-api
+spotsync-api.exe
 
 tmp/
 air.log

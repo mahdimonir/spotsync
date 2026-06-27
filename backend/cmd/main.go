@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"log"
+	"os"
 
 	"spotsync/config"
 	"spotsync/database"
@@ -20,6 +22,9 @@ import (
 )
 
 func main() {
+	
+	seedFlag := flag.Bool("seed", false, "Seed the database and exit")
+	flag.Parse()
 
 	cfg := config.LoadConfig()
 
@@ -32,6 +37,21 @@ func main() {
 		log.Fatal(err)
 	}
 
+	
+	if *seedFlag {
+		if err := database.Seed(db); err != nil {
+			log.Fatal(err)
+		}
+		log.Println("Database seeding completed. Exiting...")
+		return
+	}
+
+	if os.Getenv("SEED_DB") == "true" {
+		if err := database.Seed(db); err != nil {
+			log.Printf("Seeding database failed: %v", err)
+		}
+	}
+
 	e := echo.New()
 
 	e.Validator = customValidator.New()
@@ -42,12 +62,20 @@ func main() {
 	e.Use(echoMiddleware.Recover())
 	e.Use(echoMiddleware.CORS())
 
-	// Dependency Injection
+	
 	authRepo := repository.NewAuthRepository(db)
 	authService := service.NewAuthService(authRepo, cfg)
 	authHandler := handler.NewAuthHandler(authService)
 
-	routes.RegisterRoutes(e, authHandler)
+	zoneRepo := repository.NewParkingZoneRepository(db)
+	zoneService := service.NewParkingZoneService(zoneRepo)
+	zoneHandler := handler.NewParkingZoneHandler(zoneService)
+
+	reservationRepo := repository.NewReservationRepository(db)
+	reservationService := service.NewReservationService(reservationRepo, zoneRepo)
+	reservationHandler := handler.NewReservationHandler(reservationService)
+
+	routes.RegisterRoutes(e, authHandler, zoneHandler, reservationHandler, cfg)
 
 	log.Println("SpotSync API running on :" + cfg.Port)
 

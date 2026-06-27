@@ -6,5 +6,7 @@ frontend/out
 backend/bin
 dist
 coverage
+backend/spotsync-api
+backend/spotsync-api.exe
 
 INSTRACTION.md
