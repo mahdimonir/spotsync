@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --font-inter: "Inter", sans-serif;
+  --bg: #ffffff;
+  --bg-secondary: #f8f8f8;
+  --text: #0a0a0a;
+  --text-muted: #6b6b6b;
+  --border: #e5e5e5;
+  --accent: #059669;
+  --accent-hover: #047857;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 2px; }
+
+/* Text reveal clip utility */
+.text-clip {
+  overflow: hidden;
+  display: block;
+}
+
+/* Magnetic button hover state */
+.magnetic {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Glass card utility */
+.glass {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.9);
+}
+
+/* Selection */
+::selection {
+  background: #059669;
+  color: #fff;
+}
