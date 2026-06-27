@@ -6,7 +6,7 @@ type APIResponse struct {
 	Success bool        `json:"success"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data,omitempty"`
-	Error   interface{} `json:"error,omitempty"`
+	Errors  interface{} `json:"errors,omitempty"`
 }
 
 func Success(
@@ -31,6 +31,6 @@ func Error(
 	return c.JSON(status, APIResponse{
 		Success: false,
 		Message: message,
-		Error:   err,
+		Errors:  err,
 	})
 }
