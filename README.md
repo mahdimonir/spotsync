@@ -6,6 +6,14 @@ This repository contains a Go backend built with clean architecture, high-perfor
 
 ---
 
+## 🔗 Live Deployments
+
+- **Frontend URL (Vercel)**: [https://spotsync-jet.vercel.app](https://spotsync-jet.vercel.app)
+- **Backend URL (Render)**: [https://spotsync-wd7x.onrender.com](https://spotsync-wd7x.onrender.com)
+- **Interactive Swagger Docs**: [https://spotsync-wd7x.onrender.com/swagger/index.html](https://spotsync-wd7x.onrender.com/swagger/index.html)
+
+---
+
 ## 📋 Table of Contents
 
 - [Features](#features)
@@ -118,7 +126,7 @@ ENV=development
 
 # Database connection:
 # Either use a single DATABASE_URL connection string:
-DATABASE_URL=postgres://neondb_owner:npg_Pl9Hq1gVTYni@ep-lingering-salad-ao045m8m-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+DATABASE_URL=postgres://neondb_owner:your_password_here@ep-lingering-salad-ao045m8m-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
 
 # Or define individual variables:
 DB_HOST=localhost

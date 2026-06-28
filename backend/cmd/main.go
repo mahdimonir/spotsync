@@ -58,7 +58,11 @@ func main() {
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.GET("/", func(c echo.Context) error {
-		return c.Redirect(302, "/swagger/index.html")
+		return c.JSON(200, map[string]string{
+			"message": "Welcome to SpotSync API",
+			"docs":    "/swagger/index.html",
+			"status":  "healthy",
+		})
 	})
 	e.GET("/swagger", func(c echo.Context) error {
 		return c.Redirect(302, "/swagger/index.html")
