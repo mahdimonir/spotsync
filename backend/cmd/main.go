@@ -61,6 +61,7 @@ func main() {
 		return c.JSON(200, map[string]string{
 			"message": "Welcome to SpotSync API",
 			"docs":    "/swagger/index.html",
+			"api": "/api/v1",
 			"status":  "healthy",
 		})
 	})

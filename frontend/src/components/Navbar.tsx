@@ -2,18 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Car, User, LogOut } from "lucide-react";
 
 export default function Navbar() {
   const router = useRouter();
+  const pathname = usePathname();
   const [token, setToken] = useState<string | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
 
   useEffect(() => {
     setToken(localStorage.getItem("token"));
     setUserRole(localStorage.getItem("userRole"));
-  }, []);
+  }, [pathname]);
 
   const handleLogout = () => {
     localStorage.clear();
