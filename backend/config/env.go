@@ -28,8 +28,13 @@ func LoadConfig() *Config {
 		log.Println(".env file not found, using system environment")
 	}
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	return &Config{
-		Port: os.Getenv("PORT"),
+		Port: port,
 
 		DatabaseURL: os.Getenv("DATABASE_URL"),
 		DBHost:      os.Getenv("DB_HOST"),
