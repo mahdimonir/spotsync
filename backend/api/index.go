@@ -46,6 +46,12 @@ func init() {
 	e.Validator = customValidator.New()
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	e.GET("/", func(c echo.Context) error {
+		return c.Redirect(302, "/swagger/index.html")
+	})
+	e.GET("/swagger", func(c echo.Context) error {
+		return c.Redirect(302, "/swagger/index.html")
+	})
 
 	e.Use(echoMiddleware.Logger())
 	e.Use(echoMiddleware.Recover())
