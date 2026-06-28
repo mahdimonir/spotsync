@@ -1,8 +1,8 @@
 package database
 
 import (
-	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"spotsync/config"
@@ -16,16 +16,32 @@ func Connect(cfg *config.Config) (*gorm.DB, error) {
 	var dsn string
 	if cfg.DatabaseURL != "" {
 		dsn = cfg.DatabaseURL
+		log.Println("Connecting to database using DATABASE_URL")
 	} else {
-		dsn = fmt.Sprintf(
-			"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=UTC",
-			cfg.DBHost,
-			cfg.DBUser,
-			cfg.DBPassword,
-			cfg.DBName,
-			cfg.DBPort,
-			cfg.DBSSLMode,
-		)
+		var parts []string
+		if cfg.DBHost != "" {
+			parts = append(parts, "host="+cfg.DBHost)
+		}
+		if cfg.DBUser != "" {
+			parts = append(parts, "user="+cfg.DBUser)
+		}
+		if cfg.DBPassword != "" {
+			parts = append(parts, "password="+cfg.DBPassword)
+		}
+		if cfg.DBName != "" {
+			parts = append(parts, "dbname="+cfg.DBName)
+		}
+		if cfg.DBPort != "" {
+			parts = append(parts, "port="+cfg.DBPort)
+		}
+		if cfg.DBSSLMode != "" {
+			parts = append(parts, "sslmode="+cfg.DBSSLMode)
+		}
+		parts = append(parts, "TimeZone=UTC")
+		dsn = strings.Join(parts, " ")
+
+		log.Printf("Connecting to database: host=%s user=%s dbname=%s port=%s sslmode=%s",
+			cfg.DBHost, cfg.DBUser, cfg.DBName, cfg.DBPort, cfg.DBSSLMode)
 	}
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})

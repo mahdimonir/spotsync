@@ -44,36 +44,66 @@ func LoadConfig() *Config {
 	dbHost := os.Getenv("DB_HOST")
 	if dbHost == "" {
 		dbHost = os.Getenv("POSTGRES_HOST")
+		if dbHost == "" {
+			dbHost = os.Getenv("PGHOST")
+			if dbHost == "" {
+				dbHost = os.Getenv("DATABASE_HOST")
+			}
+		}
 	}
 
 	dbPort := os.Getenv("DB_PORT")
 	if dbPort == "" {
 		dbPort = os.Getenv("POSTGRES_PORT")
 		if dbPort == "" {
-			dbPort = "5432"
+			dbPort = os.Getenv("PGPORT")
+			if dbPort == "" {
+				dbPort = "5432"
+			}
 		}
 	}
 
 	dbUser := os.Getenv("DB_USER")
 	if dbUser == "" {
 		dbUser = os.Getenv("POSTGRES_USER")
+		if dbUser == "" {
+			dbUser = os.Getenv("PGUSER")
+			if dbUser == "" {
+				dbUser = os.Getenv("DATABASE_USER")
+			}
+		}
 	}
 
 	dbPassword := os.Getenv("DB_PASSWORD")
 	if dbPassword == "" {
 		dbPassword = os.Getenv("POSTGRES_PASSWORD")
+		if dbPassword == "" {
+			dbPassword = os.Getenv("PGPASSWORD")
+			if dbPassword == "" {
+				dbPassword = os.Getenv("DATABASE_PASSWORD")
+			}
+		}
 	}
 
 	dbName := os.Getenv("DB_NAME")
 	if dbName == "" {
 		dbName = os.Getenv("POSTGRES_DATABASE")
+		if dbName == "" {
+			dbName = os.Getenv("PGDATABASE")
+			if dbName == "" {
+				dbName = os.Getenv("DATABASE_NAME")
+			}
+		}
 	}
 
 	dbSSLMode := os.Getenv("DB_SSLMODE")
 	if dbSSLMode == "" {
 		dbSSLMode = os.Getenv("POSTGRES_SSLMODE")
 		if dbSSLMode == "" {
-			dbSSLMode = "require"
+			dbSSLMode = os.Getenv("PGSSLMODE")
+			if dbSSLMode == "" {
+				dbSSLMode = "require"
+			}
 		}
 	}
 
