@@ -1,10 +1,13 @@
+basePath: /
 definitions:
   dto.CreateReservationRequest:
     properties:
       license_plate:
+        example: KAZ-789-XY
         maxLength: 15
         type: string
       zone_id:
+        example: 1
         type: integer
     required:
     - license_plate
@@ -13,18 +16,22 @@ definitions:
   dto.CreateZoneRequest:
     properties:
       name:
+        example: Downtown A
         maxLength: 100
         minLength: 3
         type: string
       price_per_hour:
+        example: 5.5
         type: number
       total_capacity:
+        example: 50
         type: integer
       type:
         enum:
         - general
         - covered
         - ev_charging
+        example: general
         type: string
     required:
     - name
@@ -35,8 +42,10 @@ definitions:
   dto.LoginRequest:
     properties:
       email:
+        example: john.doe@example.com
         type: string
       password:
+        example: securepassword123
         type: string
     required:
     - email
@@ -45,18 +54,22 @@ definitions:
   dto.RegisterRequest:
     properties:
       email:
+        example: john.doe@example.com
         type: string
       name:
+        example: John Doe
         maxLength: 100
         minLength: 3
         type: string
       password:
+        example: securepassword123
         minLength: 6
         type: string
       role:
         enum:
         - driver
         - admin
+        example: driver
         type: string
     required:
     - email
@@ -66,31 +79,39 @@ definitions:
   dto.UpdateZoneRequest:
     properties:
       name:
+        example: Downtown A - Updated
         maxLength: 100
         minLength: 3
         type: string
       price_per_hour:
+        example: 6
         type: number
       total_capacity:
+        example: 60
         type: integer
       type:
         enum:
         - general
         - covered
         - ev_charging
+        example: covered
         type: string
     type: object
   response.APIResponse:
     properties:
       data: {}
-      error: {}
+      errors: {}
       message:
         type: string
       success:
         type: boolean
     type: object
+host: localhost:8080
 info:
   contact: {}
+  description: This is the SpotSync API server.
+  title: SpotSync API
+  version: "1.0"
 paths:
   /api/v1/auth/login:
     post:
@@ -473,4 +494,10 @@ paths:
       summary: Update Parking Zone
       tags:
       - Parking Zones
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer <your_token>" or just "<your_token>" to authenticate.
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

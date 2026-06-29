@@ -617,10 +617,12 @@ const docTemplate = `{
             "properties": {
                 "license_plate": {
                     "type": "string",
-                    "maxLength": 15
+                    "maxLength": 15,
+                    "example": "KAZ-789-XY"
                 },
                 "zone_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
@@ -636,13 +638,16 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 100,
-                    "minLength": 3
+                    "minLength": 3,
+                    "example": "Downtown A"
                 },
                 "price_per_hour": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 5.5
                 },
                 "total_capacity": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 50
                 },
                 "type": {
                     "type": "string",
@@ -650,7 +655,8 @@ const docTemplate = `{
                         "general",
                         "covered",
                         "ev_charging"
-                    ]
+                    ],
+                    "example": "general"
                 }
             }
         },
@@ -662,10 +668,12 @@ const docTemplate = `{
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "john.doe@example.com"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "securepassword123"
                 }
             }
         },
@@ -678,23 +686,27 @@ const docTemplate = `{
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "john.doe@example.com"
                 },
                 "name": {
                     "type": "string",
                     "maxLength": 100,
-                    "minLength": 3
+                    "minLength": 3,
+                    "example": "John Doe"
                 },
                 "password": {
                     "type": "string",
-                    "minLength": 6
+                    "minLength": 6,
+                    "example": "securepassword123"
                 },
                 "role": {
                     "type": "string",
                     "enum": [
                         "driver",
                         "admin"
-                    ]
+                    ],
+                    "example": "driver"
                 }
             }
         },
@@ -704,13 +716,16 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 100,
-                    "minLength": 3
+                    "minLength": 3,
+                    "example": "Downtown A - Updated"
                 },
                 "price_per_hour": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 6
                 },
                 "total_capacity": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 60
                 },
                 "type": {
                     "type": "string",
@@ -718,7 +733,8 @@ const docTemplate = `{
                         "general",
                         "covered",
                         "ev_charging"
-                    ]
+                    ],
+                    "example": "covered"
                 }
             }
         },
@@ -726,7 +742,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "data": {},
-                "error": {},
+                "errors": {},
                 "message": {
                     "type": "string"
                 },
@@ -735,17 +751,25 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "Type \"Bearer \u003cyour_token\u003e\" or just \"\u003cyour_token\u003e\" to authenticate.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "1.0",
+	Host:             "localhost:8080",
+	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "SpotSync API",
+	Description:      "This is the SpotSync API server.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

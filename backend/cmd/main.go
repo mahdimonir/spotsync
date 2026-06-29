@@ -20,7 +20,16 @@ import (
 
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
+// @title SpotSync API
+// @version 1.0
+// @description This is the SpotSync API server.
+// @host localhost:8080
+// @BasePath /
 
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Type "Bearer <your_token>" or just "<your_token>" to authenticate.
 func main() {
 	
 	seedFlag := flag.Bool("seed", false, "Seed the database and exit")

@@ -1,8 +1,13 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is the SpotSync API server.",
+        "title": "SpotSync API",
+        "contact": {},
+        "version": "1.0"
     },
+    "host": "localhost:8080",
+    "basePath": "/",
     "paths": {
         "/api/v1/auth/login": {
             "post": {
@@ -606,10 +611,12 @@
             "properties": {
                 "license_plate": {
                     "type": "string",
-                    "maxLength": 15
+                    "maxLength": 15,
+                    "example": "KAZ-789-XY"
                 },
                 "zone_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
@@ -625,13 +632,16 @@
                 "name": {
                     "type": "string",
                     "maxLength": 100,
-                    "minLength": 3
+                    "minLength": 3,
+                    "example": "Downtown A"
                 },
                 "price_per_hour": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 5.5
                 },
                 "total_capacity": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 50
                 },
                 "type": {
                     "type": "string",
@@ -639,7 +649,8 @@
                         "general",
                         "covered",
                         "ev_charging"
-                    ]
+                    ],
+                    "example": "general"
                 }
             }
         },
@@ -651,10 +662,12 @@
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "john.doe@example.com"
                 },
                 "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "securepassword123"
                 }
             }
         },
@@ -667,23 +680,27 @@
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "john.doe@example.com"
                 },
                 "name": {
                     "type": "string",
                     "maxLength": 100,
-                    "minLength": 3
+                    "minLength": 3,
+                    "example": "John Doe"
                 },
                 "password": {
                     "type": "string",
-                    "minLength": 6
+                    "minLength": 6,
+                    "example": "securepassword123"
                 },
                 "role": {
                     "type": "string",
                     "enum": [
                         "driver",
                         "admin"
-                    ]
+                    ],
+                    "example": "driver"
                 }
             }
         },
@@ -693,13 +710,16 @@
                 "name": {
                     "type": "string",
                     "maxLength": 100,
-                    "minLength": 3
+                    "minLength": 3,
+                    "example": "Downtown A - Updated"
                 },
                 "price_per_hour": {
-                    "type": "number"
+                    "type": "number",
+                    "example": 6
                 },
                 "total_capacity": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 60
                 },
                 "type": {
                     "type": "string",
@@ -707,7 +727,8 @@
                         "general",
                         "covered",
                         "ev_charging"
-                    ]
+                    ],
+                    "example": "covered"
                 }
             }
         },
@@ -715,7 +736,7 @@
             "type": "object",
             "properties": {
                 "data": {},
-                "error": {},
+                "errors": {},
                 "message": {
                     "type": "string"
                 },
@@ -723,6 +744,14 @@
                     "type": "boolean"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "Type \"Bearer \u003cyour_token\u003e\" or just \"\u003cyour_token\u003e\" to authenticate.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

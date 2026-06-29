@@ -30,20 +30,21 @@ func JWTMiddleware(cfg *config.Config) echo.MiddlewareFunc {
 
 			}
 
-			headerParts := strings.Split(authHeader, " ")
-
-			if len(headerParts) != 2 || headerParts[0] != "Bearer" {
-
+			var token string
+			if strings.HasPrefix(authHeader, "Bearer ") {
+				token = strings.TrimPrefix(authHeader, "Bearer ")
+			} else if !strings.Contains(authHeader, " ") {
+				token = authHeader
+			} else {
 				return response.Error(
 					c,
 					http.StatusUnauthorized,
 					"Invalid authorization format",
 					nil,
 				)
-
 			}
 
-			claims, err := utils.ValidateJWT(headerParts[1], cfg)
+			claims, err := utils.ValidateJWT(token, cfg)
 
 			if err != nil {
 

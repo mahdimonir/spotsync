@@ -3,8 +3,8 @@ package dto
 import "time"
 
 type CreateReservationRequest struct {
-	ZoneID       uint   `json:"zone_id" validate:"required"`
-	LicensePlate string `json:"license_plate" validate:"required,max=15"`
+	ZoneID       uint   `json:"zone_id" validate:"required" example:"1"`
+	LicensePlate string `json:"license_plate" validate:"required,max=15" example:"KAZ-789-XY"`
 }
 
 type ReservationResponse struct {
