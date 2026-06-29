@@ -106,7 +106,6 @@ definitions:
       success:
         type: boolean
     type: object
-host: localhost:8080
 info:
   contact: {}
   description: This is the SpotSync API server.

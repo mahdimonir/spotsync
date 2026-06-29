@@ -23,7 +23,6 @@ import (
 // @title SpotSync API
 // @version 1.0
 // @description This is the SpotSync API server.
-// @host localhost:8080
 // @BasePath /
 
 // @securityDefinitions.apikey BearerAuth
