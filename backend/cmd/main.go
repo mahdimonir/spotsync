@@ -4,6 +4,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"strings"
 
 	"spotsync/config"
 	"spotsync/database"
@@ -16,10 +17,11 @@ import (
 	"github.com/labstack/echo/v4"
 	echoMiddleware "github.com/labstack/echo/v4/middleware"
 
-	_ "spotsync/docs"
+	"spotsync/docs"
 
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
+
 // @title SpotSync API
 // @version 1.0
 // @description This is the SpotSync API server.
@@ -35,6 +37,13 @@ func main() {
 	flag.Parse()
 
 	cfg := config.LoadConfig()
+
+	docs.SwaggerInfo.Host = cfg.AppHost
+	if strings.HasPrefix(cfg.AppHost, "localhost:") {
+		docs.SwaggerInfo.Schemes = []string{"http"}
+	} else {
+		docs.SwaggerInfo.Schemes = []string{"https", "http"}
+	}
 
 	db, err := database.Connect(cfg)
 	if err != nil {

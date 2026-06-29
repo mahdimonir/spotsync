@@ -9,6 +9,7 @@ import (
 
 type Config struct {
 	Port string
+	AppHost string
 
 	DatabaseURL string
 	DBHost      string
@@ -107,8 +108,14 @@ func LoadConfig() *Config {
 		}
 	}
 
+	appHost := os.Getenv("APP_HOST")
+	if appHost == "" {
+		appHost = "localhost:" + port
+	}
+
 	return &Config{
 		Port: port,
+		AppHost: appHost,
 
 		DatabaseURL: databaseURL,
 		DBHost:      dbHost,
